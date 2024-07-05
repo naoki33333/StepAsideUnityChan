@@ -28,7 +28,6 @@ public class ItemGenerator : MonoBehaviour
     //アイテムリスト（追加）
     private List<GameObject> items = new List<GameObject>();
 
-    // Start is called before the first frame update
     void Start()
     {
         //初期の生成位置を設定（追加）
@@ -94,7 +93,7 @@ public class ItemGenerator : MonoBehaviour
         //アイテムの破棄（追加）
         for (int i = items.Count - 1; i >= 0; i--)
         {
-            if (items[i].transform.position.z < zPos)
+            if (items[i] != null && items[i].transform.position.z < zPos)
             {
                 Destroy(items[i]);
                 items.RemoveAt(i); //リストから削除（追加）
