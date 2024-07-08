@@ -36,6 +36,10 @@ public class UnityChanController : MonoBehaviour
 
     //アイテム生成用のスクリプトを取得（追加）
     private ItemGenerator itemGenerator;
+    //生成されたアイテムを管理するリスト（追加）
+    private List<GameObject> items = new List<GameObject>();
+    //Unityちゃんの背後5mを過ぎたアイテムを破棄（追加）
+    private float destroyDistance = 5f;
 
     // Start is called before the first frame update
     void Start()
@@ -112,6 +116,20 @@ public class UnityChanController : MonoBehaviour
 
         //アイテムの生成と破棄を管理（追加）
         this.itemGenerator.ManageItems(this.transform.position.z);
+        ManageItemDestruction(); //アイテムの破棄を管理（追加）
+    }
+
+    void ManageItemDestruction() //アイテムの破棄を管理するメソッド（追加）
+    {
+        float unityChanZ = this.transform.position.z;
+        for (int i = items.Count - 1; i >= 0; i--)
+        {
+            if (items[i] != null && items[i].transform.position.z < unityChanZ - destroyDistance)
+            {
+                Destroy(items[i]);
+                items.RemoveAt(i); //リストから削除（追加）
+            }
+        }
     }
 
     //トリガーモードで他のオブジェクトと接触した場合の処理

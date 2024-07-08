@@ -19,8 +19,6 @@ public class ItemGenerator : MonoBehaviour
 
     //Unityちゃんの進行方向に50m先までアイテムを生成（追加）
     private float generateDistance = 50f;
-    //Unityちゃんの背後5mを過ぎたアイテムを破棄（追加）
-    private float destroyDistance = 5f;
 
     //アイテムを生成するZ座標（追加）
     private float lastGeneratedZ;
@@ -42,9 +40,6 @@ public class ItemGenerator : MonoBehaviour
             GenerateItems(lastGeneratedZ + 15);
             lastGeneratedZ += 15;
         }
-
-        //アイテムの破棄（追加）
-        DestroyOldItems(unityChanZ - destroyDistance);
     }
 
     void GenerateItems(float zPos)
@@ -88,16 +83,8 @@ public class ItemGenerator : MonoBehaviour
         }
     }
 
-    void DestroyOldItems(float zPos)
+    public List<GameObject> GetGeneratedItems() //生成されたアイテムリストを取得するメソッド（追加）
     {
-        //アイテムの破棄（追加）
-        for (int i = items.Count - 1; i >= 0; i--)
-        {
-            if (items[i] != null && items[i].transform.position.z < zPos)
-            {
-                Destroy(items[i]);
-                items.RemoveAt(i); //リストから削除（追加）
-            }
-        }
+        return items;
     }
 }
